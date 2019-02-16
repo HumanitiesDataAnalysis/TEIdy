@@ -1,0 +1,245 @@
+<sp xml:id="sp-2279" who="#Macbeth_Mac">
+<speaker xml:id="spk-2279">
+<w xml:id="w0336260">MACBETH</w>
+</speaker>
+<ab xml:id="ab-2279">
+<milestone unit="ftln" xml:id="ftln-2279" n="5.5.20" ana="#short" corresp="#w0336270 #c0336280 #w0336290 #c0336300 #w0336310 #c0336320 #w0336330 #c0336340 #w0336350 #p0336360"/>
+<w xml:id="w0336270" n="5.5.20">She</w>
+<c xml:id="c0336280" n="5.5.20"> </c>
+<w xml:id="w0336290" n="5.5.20">should</w>
+<c xml:id="c0336300" n="5.5.20"> </c>
+<w xml:id="w0336310" n="5.5.20">have</w>
+<c xml:id="c0336320" n="5.5.20"> </c>
+<w xml:id="w0336330" n="5.5.20">died</w>
+<c xml:id="c0336340" n="5.5.20"> </c>
+<w xml:id="w0336350" n="5.5.20">hereafter</w>
+<pc xml:id="p0336360" n="5.5.20">.</pc>
+<lb xml:id="lb-22790"/>
+<milestone unit="ftln" xml:id="ftln-2280" n="5.5.21" ana="#verse" corresp="#w0336370 #c0336380 #w0336390 #c0336400 #w0336410 #c0336420 #w0336430 #c0336440 #w0336450 #c0336460 #w0336470 #c0336480 #w0336490 #c0336500 #w0336510 #c0336520 #w0336530 #c0336540 #w0336550 #p0336560"/>
+<w xml:id="w0336370" n="5.5.21">There</w>
+<c xml:id="c0336380" n="5.5.21"> </c>
+<w xml:id="w0336390" n="5.5.21">would</w>
+<c xml:id="c0336400" n="5.5.21"> </c>
+<w xml:id="w0336410" n="5.5.21">have</w>
+<c xml:id="c0336420" n="5.5.21"> </c>
+<w xml:id="w0336430" n="5.5.21">been</w>
+<c xml:id="c0336440" n="5.5.21"> </c>
+<w xml:id="w0336450" n="5.5.21">a</w>
+<c xml:id="c0336460" n="5.5.21"> </c>
+<w xml:id="w0336470" n="5.5.21">time</w>
+<c xml:id="c0336480" n="5.5.21"> </c>
+<w xml:id="w0336490" n="5.5.21">for</w>
+<c xml:id="c0336500" n="5.5.21"> </c>
+<w xml:id="w0336510" n="5.5.21">such</w>
+<c xml:id="c0336520" n="5.5.21"> </c>
+<w xml:id="w0336530" n="5.5.21">a</w>
+<c xml:id="c0336540" n="5.5.21"> </c>
+<w xml:id="w0336550" n="5.5.21">word</w>
+<pc xml:id="p0336560" n="5.5.21">.</pc>
+<lb xml:id="lb-22800"/>
+<milestone unit="ftln" xml:id="ftln-2281" n="5.5.22" ana="#verse" corresp="#w0336570 #c0336580 #w0336590 #c0336600 #w0336610 #c0336620 #w0336630 #c0336640 #w0336650"/>
+<w xml:id="w0336570" n="5.5.22">Tomorrow</w>
+<c xml:id="c0336580" n="5.5.22"> </c>
+<w xml:id="w0336590" n="5.5.22">and</w>
+<c xml:id="c0336600" n="5.5.22"> </c>
+<w xml:id="w0336610" n="5.5.22">tomorrow</w>
+<c xml:id="c0336620" n="5.5.22"> </c>
+<w xml:id="w0336630" n="5.5.22">and</w>
+<c xml:id="c0336640" n="5.5.22"> </c>
+<w xml:id="w0336650" n="5.5.22">tomorrow</w>
+<lb xml:id="lb-22810"/>
+<milestone unit="ftln" xml:id="ftln-2282" n="5.5.23" ana="#verse" corresp="#w0336660 #c0336670 #w0336680 #c0336690 #w0336700 #c0336710 #w0336720 #c0336730 #w0336740 #c0336750 #w0336760 #c0336770 #w0336780 #c0336790 #w0336800 #c0336810 #w0336820"/>
+<w xml:id="w0336660" n="5.5.23">Creeps</w>
+<c xml:id="c0336670" n="5.5.23"> </c>
+<w xml:id="w0336680" n="5.5.23">in</w>
+<c xml:id="c0336690" n="5.5.23"> </c>
+<w xml:id="w0336700" n="5.5.23">this</w>
+<c xml:id="c0336710" n="5.5.23"> </c>
+<w xml:id="w0336720" n="5.5.23">petty</w>
+<c xml:id="c0336730" n="5.5.23"> </c>
+<w xml:id="w0336740" n="5.5.23">pace</w>
+<c xml:id="c0336750" n="5.5.23"> </c>
+<w xml:id="w0336760" n="5.5.23">from</w>
+<c xml:id="c0336770" n="5.5.23"> </c>
+<w xml:id="w0336780" n="5.5.23">day</w>
+<c xml:id="c0336790" n="5.5.23"> </c>
+<w xml:id="w0336800" n="5.5.23">to</w>
+<c xml:id="c0336810" n="5.5.23"> </c>
+<w xml:id="w0336820" n="5.5.23">day</w>
+<lb xml:id="lb-22820"/>
+<milestone unit="ftln" xml:id="ftln-2283" n="5.5.24" ana="#verse" corresp="#w0336830 #c0336840 #w0336850 #c0336860 #w0336870 #c0336880 #w0336890 #c0336900 #w0336910 #c0336920 #w0336930 #c0336940 #w0336950 #p0336960"/>
+<w xml:id="w0336830" n="5.5.24">To</w>
+<c xml:id="c0336840" n="5.5.24"> </c>
+<w xml:id="w0336850" n="5.5.24">the</w>
+<c xml:id="c0336860" n="5.5.24"> </c>
+<w xml:id="w0336870" n="5.5.24">last</w>
+<c xml:id="c0336880" n="5.5.24"> </c>
+<w xml:id="w0336890" n="5.5.24">syllable</w>
+<c xml:id="c0336900" n="5.5.24"> </c>
+<w xml:id="w0336910" n="5.5.24">of</w>
+<c xml:id="c0336920" n="5.5.24"> </c>
+<w xml:id="w0336930" n="5.5.24">recorded</w>
+<c xml:id="c0336940" n="5.5.24"> </c>
+<w xml:id="w0336950" n="5.5.24">time</w>
+<pc xml:id="p0336960" n="5.5.24">,</pc>
+<lb xml:id="lb-22830"/>
+<milestone unit="ftln" xml:id="ftln-2284" n="5.5.25" ana="#verse" corresp="#w0336970 #c0336980 #w0336990 #c0337000 #w0337010 #c0337020 #w0337030 #c0337040 #w0337050 #c0337060 #w0337070 #c0337080 #w0337090"/>
+<w xml:id="w0336970" n="5.5.25">And</w>
+<c xml:id="c0336980" n="5.5.25"> </c>
+<w xml:id="w0336990" n="5.5.25">all</w>
+<c xml:id="c0337000" n="5.5.25"> </c>
+<w xml:id="w0337010" n="5.5.25">our</w>
+<c xml:id="c0337020" n="5.5.25"> </c>
+<w xml:id="w0337030" n="5.5.25">yesterdays</w>
+<c xml:id="c0337040" n="5.5.25"> </c>
+<w xml:id="w0337050" n="5.5.25">have</w>
+<c xml:id="c0337060" n="5.5.25"> </c>
+<w xml:id="w0337070" n="5.5.25">lighted</w>
+<c xml:id="c0337080" n="5.5.25"> </c>
+<w xml:id="w0337090" n="5.5.25">fools</w>
+<lb xml:id="lb-22840"/>
+<milestone unit="ftln" xml:id="ftln-2285" n="5.5.26" ana="#verse" corresp="#w0337100 #c0337110 #w0337120 #c0337130 #w0337140 #c0337150 #w0337160 #c0337170 #w0337180 #p0337190 #c0337200 #w0337210 #p0337220 #c0337230 #w0337240 #p0337250 #c0337260 #w0337270 #c0337280 #w0337290 #p0337300"/>
+<w xml:id="w0337100" n="5.5.26">The</w>
+<c xml:id="c0337110" n="5.5.26"> </c>
+<w xml:id="w0337120" n="5.5.26">way</w>
+<c xml:id="c0337130" n="5.5.26"> </c>
+<w xml:id="w0337140" n="5.5.26">to</w>
+<c xml:id="c0337150" n="5.5.26"> </c>
+<w xml:id="w0337160" n="5.5.26">dusty</w>
+<c xml:id="c0337170" n="5.5.26"> </c>
+<w xml:id="w0337180" n="5.5.26">death</w>
+<pc xml:id="p0337190" n="5.5.26">.</pc>
+<c xml:id="c0337200" n="5.5.26"> </c>
+<w xml:id="w0337210" n="5.5.26">Out</w>
+<pc xml:id="p0337220" n="5.5.26">,</pc>
+<c xml:id="c0337230" n="5.5.26"> </c>
+<w xml:id="w0337240" n="5.5.26">out</w>
+<pc xml:id="p0337250" n="5.5.26">,</pc>
+<c xml:id="c0337260" n="5.5.26"> </c>
+<w xml:id="w0337270" n="5.5.26">brief</w>
+<c xml:id="c0337280" n="5.5.26"> </c>
+<w xml:id="w0337290" n="5.5.26">candle</w>
+<pc xml:id="p0337300" n="5.5.26">!</pc>
+<lb xml:id="lb-22850"/>
+<milestone unit="page" xml:id="ms-177" n="177" />
+<pb xml:id="pb-179" n="179" spanTo="#ms-179"/>
+<fw xml:id="fw-179" type="header" n="179">ACT 5. SC. 5</fw>
+<milestone unit="ftln" xml:id="ftln-2286" n="5.5.27" ana="#verse" corresp="#w0337310 #c0337320 #w0337330 #c0337340 #w0337350 #c0337360 #w0337370 #c0337380 #w0337390 #p0337400 #c0337410 #w0337420 #c0337430 #w0337440 #c0337450 #w0337460"/>
+<w xml:id="w0337310" n="5.5.27">Life’s</w>
+<c xml:id="c0337320" n="5.5.27"> </c>
+<w xml:id="w0337330" n="5.5.27">but</w>
+<c xml:id="c0337340" n="5.5.27"> </c>
+<w xml:id="w0337350" n="5.5.27">a</w>
+<c xml:id="c0337360" n="5.5.27"> </c>
+<w xml:id="w0337370" n="5.5.27">walking</w>
+<c xml:id="c0337380" n="5.5.27"> </c>
+<w xml:id="w0337390" n="5.5.27">shadow</w>
+<pc xml:id="p0337400" n="5.5.27">,</pc>
+<c xml:id="c0337410" n="5.5.27"> </c>
+<w xml:id="w0337420" n="5.5.27">a</w>
+<c xml:id="c0337430" n="5.5.27"> </c>
+<w xml:id="w0337440" n="5.5.27">poor</w>
+<c xml:id="c0337450" n="5.5.27"> </c>
+<w xml:id="w0337460" n="5.5.27">player</w>
+<lb xml:id="lb-22860"/>
+<milestone unit="ftln" xml:id="ftln-2287" n="5.5.28" ana="#verse" corresp="#w0337470 #c0337480 #w0337490 #c0337500 #w0337510 #c0337520 #w0337530 #c0337540 #w0337550 #c0337560 #w0337570 #c0337580 #w0337590 #c0337600 #w0337610 #c0337620 #w0337630"/>
+<w xml:id="w0337470" n="5.5.28">That</w>
+<c xml:id="c0337480" n="5.5.28"> </c>
+<w xml:id="w0337490" n="5.5.28">struts</w>
+<c xml:id="c0337500" n="5.5.28"> </c>
+<w xml:id="w0337510" n="5.5.28">and</w>
+<c xml:id="c0337520" n="5.5.28"> </c>
+<w xml:id="w0337530" n="5.5.28">frets</w>
+<c xml:id="c0337540" n="5.5.28"> </c>
+<w xml:id="w0337550" n="5.5.28">his</w>
+<c xml:id="c0337560" n="5.5.28"> </c>
+<w xml:id="w0337570" n="5.5.28">hour</w>
+<c xml:id="c0337580" n="5.5.28"> </c>
+<w xml:id="w0337590" n="5.5.28">upon</w>
+<c xml:id="c0337600" n="5.5.28"> </c>
+<w xml:id="w0337610" n="5.5.28">the</w>
+<c xml:id="c0337620" n="5.5.28"> </c>
+<w xml:id="w0337630" n="5.5.28">stage</w>
+<lb xml:id="lb-22870"/>
+<milestone unit="ftln" xml:id="ftln-2288" n="5.5.29" ana="#verse" corresp="#w0337640 #c0337650 #w0337660 #c0337670 #w0337680 #c0337690 #w0337700 #c0337710 #w0337720 #c0337730 #w0337740 #p0337750 #c0337760 #w0337770 #c0337780 #w0337790 #c0337800 #w0337810 #c0337820 #w0337830"/>
+<w xml:id="w0337640" n="5.5.29">And</w>
+<c xml:id="c0337650" n="5.5.29"> </c>
+<w xml:id="w0337660" n="5.5.29">then</w>
+<c xml:id="c0337670" n="5.5.29"> </c>
+<w xml:id="w0337680" n="5.5.29">is</w>
+<c xml:id="c0337690" n="5.5.29"> </c>
+<w xml:id="w0337700" n="5.5.29">heard</w>
+<c xml:id="c0337710" n="5.5.29"> </c>
+<w xml:id="w0337720" n="5.5.29">no</w>
+<c xml:id="c0337730" n="5.5.29"> </c>
+<w xml:id="w0337740" n="5.5.29">more</w>
+<pc xml:id="p0337750" n="5.5.29">.</pc>
+<c xml:id="c0337760" n="5.5.29"> </c>
+<w xml:id="w0337770" n="5.5.29">It</w>
+<c xml:id="c0337780" n="5.5.29"> </c>
+<w xml:id="w0337790" n="5.5.29">is</w>
+<c xml:id="c0337800" n="5.5.29"> </c>
+<w xml:id="w0337810" n="5.5.29">a</w>
+<c xml:id="c0337820" n="5.5.29"> </c>
+<w xml:id="w0337830" n="5.5.29">tale</w>
+<lb xml:id="lb-22880"/>
+<milestone unit="ftln" xml:id="ftln-2289" n="5.5.30" ana="#verse" corresp="#w0337840 #c0337850 #w0337860 #c0337870 #w0337880 #c0337890 #w0337900 #p0337910 #c0337920 #w0337930 #c0337940 #w0337950 #c0337960 #w0337970 #c0337980 #w0337990 #c0338000 #w0338010 #p0338020"/>
+<w xml:id="w0337840" n="5.5.30">Told</w>
+<c xml:id="c0337850" n="5.5.30"> </c>
+<w xml:id="w0337860" n="5.5.30">by</w>
+<c xml:id="c0337870" n="5.5.30"> </c>
+<w xml:id="w0337880" n="5.5.30">an</w>
+<c xml:id="c0337890" n="5.5.30"> </c>
+<w xml:id="w0337900" n="5.5.30">idiot</w>
+<pc xml:id="p0337910" n="5.5.30">,</pc>
+<c xml:id="c0337920" n="5.5.30"> </c>
+<w xml:id="w0337930" n="5.5.30">full</w>
+<c xml:id="c0337940" n="5.5.30"> </c>
+<w xml:id="w0337950" n="5.5.30">of</w>
+<c xml:id="c0337960" n="5.5.30"> </c>
+<w xml:id="w0337970" n="5.5.30">sound</w>
+<c xml:id="c0337980" n="5.5.30"> </c>
+<w xml:id="w0337990" n="5.5.30">and</w>
+<c xml:id="c0338000" n="5.5.30"> </c>
+<w xml:id="w0338010" n="5.5.30">fury</w>
+<pc xml:id="p0338020" n="5.5.30">,</pc>
+<lb xml:id="lb-22890"/>
+<milestone unit="ftln" xml:id="ftln-2290" n="5.5.31" ana="#short" corresp="#w0338030 #c0338040 #w0338050 #p0338060"/>
+<w xml:id="w0338030" n="5.5.31">Signifying</w>
+<c xml:id="c0338040" n="5.5.31"> </c>
+<w xml:id="w0338050" n="5.5.31">nothing</w>
+<pc xml:id="p0338060" n="5.5.31">.</pc>
+<lb xml:id="lb-22900"/>
+<lb xml:id="lb-22901"/>
+<stage xml:id="stg-2290.1" n="SD 5.5.31.1" type="entrance" who="#MESSENGERS.3_Mac">
+<w xml:id="w0338070" n="SD 5.5.31.1">Enter</w>
+<c xml:id="c0338080" n="SD 5.5.31.1"> </c>
+<w xml:id="w0338090" n="SD 5.5.31.1">a</w>
+<c xml:id="c0338100" n="SD 5.5.31.1"> </c>
+<w xml:id="w0338110" n="SD 5.5.31.1">Messenger</w>
+<pc xml:id="p0338120" n="SD 5.5.31.1">.</pc>
+</stage>
+<lb xml:id="lb-22902"/>
+<lb xml:id="lb-22903"/>
+<milestone unit="ftln" xml:id="ftln-2291" n="5.5.32" ana="#verse" corresp="#w0338130 #c0338140 #w0338150 #c0338160 #w0338170 #c0338180 #w0338190 #c0338200 #w0338210 #c0338220 #w0338230 #p0338240 #c0338250 #w0338260 #c0338270 #w0338280 #c0338290 #w0338300 #p0338310"/>
+<w xml:id="w0338130" n="5.5.32">Thou</w>
+<c xml:id="c0338140" n="5.5.32"> </c>
+<w xml:id="w0338150" n="5.5.32">com’st</w>
+<c xml:id="c0338160" n="5.5.32"> </c>
+<w xml:id="w0338170" n="5.5.32">to</w>
+<c xml:id="c0338180" n="5.5.32"> </c>
+<w xml:id="w0338190" n="5.5.32">use</w>
+<c xml:id="c0338200" n="5.5.32"> </c>
+<w xml:id="w0338210" n="5.5.32">thy</w>
+<c xml:id="c0338220" n="5.5.32"> </c>
+<w xml:id="w0338230" n="5.5.32">tongue</w>
+<pc xml:id="p0338240" n="5.5.32">:</pc>
+<c xml:id="c0338250" n="5.5.32"> </c>
+<w xml:id="w0338260" n="5.5.32">thy</w>
+<c xml:id="c0338270" n="5.5.32"> </c>
+<w xml:id="w0338280" n="5.5.32">story</w>
+<c xml:id="c0338290" n="5.5.32"> </c>
+<w xml:id="w0338300" n="5.5.32">quickly</w>
+<pc xml:id="p0338310" n="5.5.32">.</pc>
+</ab>
+</sp>
