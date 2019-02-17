@@ -1,5 +1,5 @@
 ---
-title: "Shakespeare"
+title: "Milton"
 author: "Ben Schmidt"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -17,47 +17,30 @@ knitr::opts_chunk$set(
 ```
 
 
+Reading Paradise Lost from the EEBO version, and looking for the most distinguishing words in each book.
+
 ```{r, fig.show='hold'}
-library(TEIdy)
-tree = xml2::read_xml("https://raw.githubusercontent.com/textcreationpartnership/A50919/master/A50919.xml")
+library(TEIdytext)
+library(tidytext)
+fname = system.file("extdata", "ParadiseLost.xml", package="TEIdytext")
+data = TEIdy(fname)
 
-
-library(dplyr)
-node = tree %>% xpl(2) %>% xpl(2) %>% xpl(1)
-all = node %>% TEIdy::TEIdy(discard = c("teiHeader"), ignore = c("text")) %>% as_data_frame
-all %>% summarize_all(~is.na(.) %>% sum )
-node %>% TEIdy::TEIdy(mode="summary")
-?summarize_all
-
-by_species <- iris %>% group_by(Species)
-by_species %>% mutate_all(funs(inches = . / 2.54))
-
-
+data %>% select(plaintext, div.book.n) %>% 
+  unnest_tokens(word, plaintext) %>% 
+  mutate(div.book.n = as.numeric(div.book.n)) %>%
+  group_by(div.book.n, word) %>% 
+  summarize(count=n()) %>% 
+  bind_tf_idf(word, div.book.n, count) %>%
+  arrange(div.book.n, -tf_idf) %>%
+  slice(1:6) %>%
+  ggplot() + geom_point(aes(x=div.book.n, y=word, size=count)) + 
+  scale_size_continuous(trans='sqrt') + facet_wrap(~div.book.n, scales='free_y')
 
 ```
 
 
 ```{r}
-library(stringr)
-library(tidytext)
-all %>% unnest_tokens(word, text) %>% group_by(`div-n`) %>% mutate(word2 = lead(word, 1)) %>%
-  filter(!is.na(`div-n`)) %>% transmute(bigram = paste(word, word2), div = `div-n`) %>%
-  group_by(div, bigram) %>% summarize(count=n()) %>%
-  tidytext::bind_tf_idf(bigram, div, count) %>%
-  arrange(-tf_idf) -> data
-
-data %>% group_by(div) %>% slice(1:3) %>% arrange(div)
-
-library(ggplot2)
-d = all %>% group_by(`act-n`, `scene-n`, `sp-who`) %>% summarize(count=n()) %>% group_by(`sp-who`) %>% mutate(total = sum(count)) 
-
-d %>%
-  filter(total > 100) %>% ggplot() + aes(y=`act-n`, x = `scene-n`, size = count) + geom_point(data = d %>% group_by(`act-n`, `scene-n`) %>% summarize(count = sum(count)), alpha = 0.2) + geom_point() + facet_wrap(~`sp-who`) + scale_size_continuous(trans='sqrt')
-  
-
-library(TEIdy)
-acts = d %>% TEIdy(discard = c("w", "c"))
-acts
+data %>% filter(!is.na(author))
 ```
 
 

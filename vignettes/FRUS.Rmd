@@ -1,0 +1,54 @@
+---
+title: "FRUS"
+author: "Ben Schmidt"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r, fig.show='hold'}
+library(tidyverse)
+library(TEIdytext)
+fname = system.file("extdata", "frus1946v06.xml", package = "TEIdytext")
+all = TEIdy(fname)
+
+
+lift_data = function(data, where, from = NULL, to = NULL) {
+  # Lifts up data that is undefined for tag across the group.
+  # Especially useful if the text is present.
+  tag = enquo(where)
+  value = enquo(from)
+  if (quo_is_null(value)) {
+    cat("NULL")
+    value = tag
+  }
+  newfield = enquo(to)
+  if (quo_is_null(newfield)) {
+    newfield = value 
+  }
+  data %>% mutate(!!newfield := map2(!!tag, !!value,  ~ list(.x, .y)) %>% discard(~is.na(.[[1]])) %>% map(pluck,2) %>% compact %>% paste(collapse = "--"))
+}
+
+frus_words = all %>% filter(div.document.subtype=="historical-document") %>%
+  mutate(div.document.n = as.numeric(div.document.n)) %>%
+  group_by(div.document.n) %>%
+  lift_data(persName.from, plaintext, sender) %>%
+  select(sender, div.document.n,`date.content-date.notAfter`, `date.content-date.notBefore`, plaintext) %>% 
+  unnest_tokens(word, plaintext) %>%
+  group_by(sender, div.document.n, word) %>% summarize(count=n())
+
+frus_words %>% group_by(div.document.n, sender) %>% summarize(count=n()) %>%
+  arrange(-count)
+
+```

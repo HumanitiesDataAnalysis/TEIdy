@@ -9,38 +9,98 @@ test_that("multiplication works", {
 })
 
 test_that("simplest XML", {
-  xml2::read_xml("<w>foo</w>") %>% TEIdytext:::traverseXML %>%
+  z = xml2::read_xml("<w>foo</w>") %>% TEIdytext:::traverseXML()
+  do.call(data_frame, as.list(z))[1:z$.length,]
+  ls(z) %>%
   expect_length(2)
 })
 
 
+
+
 test_that("nested XML", {
-  xml2::read_xml("<w>foo<c>foo bar</c></w>") %>% traverseXML %>%
+  z = xml2::read_xml("<w>foo<c>foo bar</c></w>") %>% TEIdytext:::traverseXML() %>% TEIdytext:::bundle_env_to_frame() %>%
+    nrow %>% expect_equal(2)
+  do.call(data_frame, as.list(z))[1:z$.length,]
+
+})
+
+test_that("empty produce metadata", {
+  xml2::read_xml("<pb id='foo'/>") %>% TEIdytext:::traverseXML() %>%
+    TEIdytext:::bundle_env_to_frame() %>% nrow %>% expect_equal(1)
+})
+
+xml2::read_xml("<div><a>a</a><b>b</b><c>c</c></div>") %>% TEIdytext:::traverseXML() %>%
+  TEIdytext:::bundle_env_to_frame()
+
+test_that("empty tags fill out a row", {
+  data = xml2::read_xml("<div><pb id='foo' /><span>foo</span><pb id='tef' /></div>") %>% TEIdytext:::traverseXML() %>%
+    TEIdytext:::bundle_env_to_frame()
+  data %>% nrow %>% expect_equal(3)
+  data %>% ncol %>% expect_equal(6)
+})
+
+test_that("frus", {
+  z = system.file("extdata", "frus1946v06.xml", package="TEIdytext") %>%
+     xml2::read_xml() %>% TEIdytext:::traverseXML() %>%
+      TEIdytext:::bundle_env_to_frame()
+  z %>% select(basetext) %>% slice(110:139)
+
+})
+
+test_that("nested XML", {
+  z = xml2::read_xml("<w>foo<c>foo <pb id=\"13\"></pb>bar</c><c>foo</c></w>") %>% TEIdytext:::traverseXML() %>%
+    TEIdytext:::bundle_env_to_frame()
+  z
+  do.call(data_frame, as.list(z))[1:z$.length,]
+
+  ls(z) %>%
     expect_length(3)
 })
 
+test_that("macbeth act 1 loads", {
+  z = system.file("extdata", "Mac.xml", package="TEIdytext") %>%
+    xml2::read_xml() %>%
+    xml2::xml_contents() %>%
+    purrr::pluck(2) %>%
+    xml2::xml_contents() %>%
+    purrr::pluck(2) %>%
+    xml2::xml_contents() %>%
+    purrr::pluck(6)
 
+  f = z %>% TEIdytext:::traverseXML() %>% TEIdytext:::bundle_env_to_frame()
 
-
-test_that("kennan", {
-  system.file("extdata", "kennan.xml", package="TEIdytext") %>%
-  xml2::read_xml() %>% traverseXML
+  f
 })
 
-kennan = TEIdy(system.file("extdata", "kennan.xml", package="TEIdytext"))
+test_that("Macbeth", {
+  z = system.file("extdata", "Mac.xml", package="TEIdytext") %>%
+    xml2::read_xml() %>%
+    xml2::xml_contents() %>%
+    purrr::pluck(2) %>%
+    TEIdytext:::traverseXML() %>% TEIdytext:::bundle_env_to_frame()
 
-not_all_na <- function(x) {!all(is.na(x))}
+})
 
-kennan
+test_that("kennan", {
+  z = system.file("extdata", "kennan.xml", package="TEIdytext") %>%
+  xml2::read_xml()
 
-z = env()
+  f = z %>% TEIdytext:::traverseXML() %>% TEIdytext:::bundle_env_to_frame()
+  f %>% View
+})
 
-combine = function(left, right, fill = "repeat") {
-  ll = envir$.length
 
-  lr = length(right)[[1]]
+listset = list(list("a" = c(1,2,3), "b" = c(4,5,6)), list("c"=c(1:5), "b" = 5:9) )
+left = listset[[1]] %>% TEIdytext:::as_env()
+right = listset[[2]] %>% TEIdytext:::as_env()
 
-}
+TEIdytext:::combine_env(left, right)
+left$.length
+left$b
+combine_env(left, right)
+left$c
+?ls
 
 combine_data = function(listset) {
   out = listset[[1]]
@@ -56,5 +116,3 @@ combine_data = function(listset) {
     return
 }
 
-listset = list(list("a" = c(1,2,3), "b" = c(4,5,6)), list("c"=c(1:5), "b" = 5:9) )
-listset %>% combine_data()

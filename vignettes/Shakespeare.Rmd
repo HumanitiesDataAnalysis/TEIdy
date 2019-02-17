@@ -22,9 +22,14 @@ library(tidyverse)
 library(TEIdytext)
 #fname = system.file("extdata", "frus1946v07.xml", package = "TEIdytext")
 fname = system.file("extdata", "Tomorrow_and_tomorrow.xml", package="TEIdytext")
-#fname = system.file("extdata", "Mac.xml", package="TEIdytext")
+fname = system.file("extdata", "Mac.xml", package="TEIdytext")
 all = TEIdy(fname, ignore = c("c", "w", "text"), discard = "teiHeader")
 
+z = xml2::read_xml(fname)
+
+rlength = function(z) {
+  return(1 + map(z, rlength))
+}
 
 all %>% filter(!is.na(speaker))
 

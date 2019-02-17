@@ -1,10 +1,5 @@
 library(purrr)
 
-.xpl = function(x, i) Bxml2::xml_contents(x) %>% pluck(i)
-
-
-tomorrow = system.file("extdata", "Tomorrow_and_tomorrow.xml", package="TEIdy")
-
 #' Load an XML document as a data.frame
 #'
 #' @param fname A filename
@@ -26,7 +21,7 @@ tomorrow = system.file("extdata", "Tomorrow_and_tomorrow.xml", package="TEIdy")
 TEIdy = function(fname, ignore = c(), discard = c(), keep = c()) {
   node = xml2::read_xml(fname)
   traverseXML(node, ignore = ignore, discard = discard, keep = keep, mode = "complete") %>%
-    do.call(data_frame, .)
+    bundle_env_to_frame()
 }
 
 
@@ -59,42 +54,80 @@ combine_data = function(listset) {
 }
 
 
-traverseXML = function(node, ignore = c(), discard = c(), keep = c(), mode = "complete") {
-  combiner = .summaryFinalize
-  if (mode=="complete") {
-      combiner = combine_data
+lift_data = function(data, from = NULL, to = NULL) {
+  # Lifts up data that is undefined for tag across the group.
+  # Especially useful if the text is present.
+  from = enquo(from)
+  newfield = enquo(to)
+  if (quo_is_null(newfield)) {
+    newfield = from
   }
+  data %>% mutate(!!newfield := !!from %>% discard(is.na) %>% paste(collapse = "--"))
+}
+
+
+as_env = function(l) {
+  if (is.list(l)) {
+    out = rlang::as_environment(l)
+    length = length(out[[ls(envir = out)[1]]])
+    out$.length = length
+    out$.allocated = length
+  }
+  out
+}
+
+combine_env = function(left, right) {
+  left_names = ls(envir = left)
+  right_names = ls(envir = right)
+  if ((left$.allocated - left$.length) < right$.length) {
+    # Overallocated a bunch of NAs.
+    adding = max(2 * left$.length + right$.length, 511)
+    for (name in left_names) {
+      left[[name]] = c(left[[name]], rep(NA, adding))
+    }
+    left$.allocated = left$.allocated + adding
+  }
+  for (name in right_names) {
+
+    if (is.null(left[[name]])) {
+      left[[name]] = c(rep(NA, left$.allocated))
+    }
+
+    left[[name]][(left$.length + 1):(left$.length + right$.length)] = right[[name]][1:right$.length]
+  }
+  left$.length = left$.length + right$.length
+  return(left)
+}
+
+bundle_env_to_frame = function(z) {
+  do.call(data_frame, as.list(z))[1:z$.length,]
+}
+
+traverseXML = function(node, ignore = c("basetext"), discard = c(), keep = c(), mode = "complete") {
+  combiner = combine_env
   if (class(node)[1] == "xml_nodeset") {
-    return (node %>% map(traverseXML, ignore = ignore, discard = discard, keep = keep, mode = mode) %>% discard(is.null) %>% combiner)
+    return (map(node, traverseXML, ignore = ignore, discard = discard, keep = keep, mode = mode) %>% discard(is.null) %>% combiner)
   }
 
   if (xml2::xml_type(node) == "text") {
-    if (mode=="summarize") {return(data_frame(tag="text", value="text", children=1, n = 1))}
-    return(list(text = xml2::xml_text(node)))
+    if (mode=="summarize") {return(data_frame(tag="basetext", value="text", children=1, n = 1))}
+    return(env(plaintext = xml2::xml_text(node), .length = 1, .allocated = 1))
   }
 
   name = xml2::xml_name(node)
 
-  if (name %in% discard) {
-    return(NULL)
-  }
+  if (name %in% discard) return(NULL)
 
   children = childNodes(node, discard, ignore, keep, mode)
-
   if (length(children)==0) {
-    if (mode != "summarize") {
-      return(NULL)
-    } else {
-      children = data_frame()
-    }
+    children = list(env("empty" = name, .length = 1, .allocated = 1))
   }
 
-  children = children %>% combiner
+  reduced = reduce(children, combiner)
 
   if (name %in% ignore) {
-    return(children)
+    return(reduced)
   }
-
 
   meta2 = xml2::xml_attrs(node) %>% as.list
 
@@ -103,27 +136,26 @@ traverseXML = function(node, ignore = c(), discard = c(), keep = c(), mode = "co
   }
 
   metadata = list()
-  metadata[[name]] = TRUE
+  metadata[[name]] = "empty"
 
   meta2 %>% imap(function(.x, .y) {
     if (.y != 'type') {
-      metadata[[paste(name, .y, sep='.')]] <<- .x
+      if (.y == 'id') {
+        metadata[[name]] <<- .x
+      } else {
+        metadata[[paste(name, .y, sep='.')]] <<- .x
+      }
     }
   })
 
-
-  if(mode == "summarize") {
-    if (length(children) > 1 && !is.null(ncol(children))) {
-      child_count = sum(children$children)
-    } else {
-      child_count = 1
+  metadata %>% imap(function(val, key) {
+    if (reduced$.allocated < reduced$.length) {
+      stop("Corrupted data")
     }
-    return(
-    data_frame(tag = names(metadata), value = unlist(metadata) %>% as.character, children = child_count, n = 1) %>% bind_rows(children)
-      )
-  }
-  child_length = length(children[[1]])
-  metadata %>% map(~rep(., child_length)) %>% c(children) %>% return
+    reduced[[key]] = c(rep(val, reduced$.length), rep(NA, reduced$.allocated - reduced$.length))
+  })
+
+  return(reduced)
 
 }
 
