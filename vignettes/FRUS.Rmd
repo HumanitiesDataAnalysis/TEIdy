@@ -1,5 +1,5 @@
 ---
-title: "FRUS"
+title: "Shakespeare"
 author: "Ben Schmidt"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,36 +19,38 @@ knitr::opts_chunk$set(
 
 ```{r, fig.show='hold'}
 library(tidyverse)
+library(tidytext)
 library(TEIdytext)
 fname = system.file("extdata", "frus1946v06.xml", package = "TEIdytext")
-all = TEIdy(fname)
 
+all = TEIdy(fname, ignore = c("c", "w"), discard = "teiHeader") 
+```
 
-lift_data = function(data, where, from = NULL, to = NULL) {
-  # Lifts up data that is undefined for tag across the group.
-  # Especially useful if the text is present.
-  tag = enquo(where)
-  value = enquo(from)
-  if (quo_is_null(value)) {
-    cat("NULL")
-    value = tag
-  }
-  newfield = enquo(to)
-  if (quo_is_null(newfield)) {
-    newfield = value 
-  }
-  data %>% mutate(!!newfield := map2(!!tag, !!value,  ~ list(.x, .y)) %>% discard(~is.na(.[[1]])) %>% map(pluck,2) %>% compact %>% paste(collapse = "--"))
-}
+Get word counts by document author and document number.
 
-frus_words = all %>% filter(div.document.subtype=="historical-document") %>%
-  mutate(div.document.n = as.numeric(div.document.n)) %>%
-  group_by(div.document.n) %>%
-  lift_data(persName.from, plaintext, sender) %>%
-  select(sender, div.document.n,`date.content-date.notAfter`, `date.content-date.notBefore`, plaintext) %>% 
+```{r}
+counts = all %>% 
+  filter(div.document.subtype=="historical-document") %>%
+  group_by(div.document.n) %>% 
+  # Lift the plaintext inside 'persName.from' tags to a new 'name_from' field.
+  lift_data(persName.from, plaintext, name_from) %>%
+  select(name_from, div.document.n, plaintext) %>%
   unnest_tokens(word, plaintext) %>%
-  group_by(sender, div.document.n, word) %>% summarize(count=n())
+  group_by(name_from, word, div.document.n) %>%
+  filter(name_from != "") %>%
+  summarize(count = n()) %>% arrange(-count) %>% 
+  ungroup %>%
+  group_by(div.document.n)
 
-frus_words %>% group_by(div.document.n, sender) %>% summarize(count=n()) %>%
-  arrange(-count)
+j = counts %>%
+  group_by(name_from) %>% 
+  filter(sum(count) > 10000) %>% 
+  summarize_llr(word,count)
 
+j %>% group_by(name_from) %>%
+  group_by(name_from) %>%
+  filter(n() > 100) %>% 
+  top_n(10, dunning_llr) %>%
+  
+ggplot() + geom_bar(aes(x=word, y=dunning_llr), stat="identity") + facet_wrap(~name_from, scales="free_y") + coord_flip()
 ```

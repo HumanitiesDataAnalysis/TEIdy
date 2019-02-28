@@ -3,6 +3,7 @@ context("xml")
 library(TEIdytext)
 library(testthat)
 library(dplyr)
+library(purrr)
 
 test_that("multiplication works", {
   expect_equal(2 * 2, 4)

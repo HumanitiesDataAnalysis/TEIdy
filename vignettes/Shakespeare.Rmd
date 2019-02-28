@@ -19,93 +19,29 @@ knitr::opts_chunk$set(
 
 ```{r, fig.show='hold'}
 library(tidyverse)
-library(TEIdytext)
-#fname = system.file("extdata", "frus1946v07.xml", package = "TEIdytext")
-fname = system.file("extdata", "Tomorrow_and_tomorrow.xml", package="TEIdytext")
-fname = system.file("extdata", "Mac.xml", package="TEIdytext")
-all = TEIdy(fname, ignore = c("c", "w", "text"), discard = "teiHeader")
-
-z = xml2::read_xml(fname)
-
-rlength = function(z) {
-  return(1 + map(z, rlength))
-}
-
-all %>% filter(!is.na(speaker))
-
-library(rlang)
-lift_data = function(data, where, from = NULL, to = NULL) {
-  # Lifts up data that is undefined for tag across the group.
-  # Especially useful if the text is present.
-  tag = enquo(where)
-  value = enquo(from)
-  if (quo_is_null(value)) {
-    cat("NULL")
-    value = tag
-  }
-  newfield = enquo(to)
-  if (quo_is_null(newfield)) {
-    newfield = value 
-  }
-  data %>% mutate(!!newfield := map2(!!tag, !!value,  ~ list(.x, .y)) %>% discard(~is.na(.[[1]])) %>% map(pluck,2) %>% compact %>% paste(collapse = "--"))
-}
-
-all %>% group_by(sp.id) %>% filter(!is.na(sp.id))  %>% extract_data(speaker, text, speaker) %>% select(sp.who, speaker, text) %>% ungroup %>% group_by(sp.who, speaker) %>% summarize(count=n()) 
-
-
-all %>% group_by(sp.who) %>% filter(ab==TRUE, text!= " ") %>% group_by(sp.who, text) %>% summarize(count=n()) %>% filter(sum(count) > 250) %>% tidytext::bind_tf_idf(text, sp.who, count) %>%
-  group_by(sp.who) %>% arrange(-tf_idf) %>% slice(1:3) %>% select(tf_idf, sp.who, text, count) %>% arrange(-tf_idf)
-
-
-```
-
-```{r}
-all %>% filter()
-
-library(ggplot2)
-d = all %>% group_by(`act-n`, `scene-n`, `sp-who`) %>% summarize(count=n()) %>% group_by(`sp-who`) %>% mutate(total = sum(count)) 
-
-d %>%
-  filter(total > 100) %>% ggplot() + aes(y=`act-n`, x = `scene-n`, size = count) + geom_point(data = d %>% group_by(`act-n`, `scene-n`) %>% summarize(count = sum(count)), alpha = 0.2) + geom_point() + facet_wrap(~`sp-who`) + scale_size_continuous(trans='sqrt')
-  
-
-
-library(TEIdy)
-acts = d %>% TEIdy(discard = c("w", "c"))
-acts
-```
-
-
-```{r}
-act1 %>% unnest_tokens(word, text) %>% group_by(`sp-who`) %>% summarize(count=n())
-
-header = tree %>% xpl(1) %>% to_frame
-
-colnas = . %>% apply(., 2, function(col) sum(is.na(col))) %>% order
-
-reselect = function(frame) { neworder = frame %>% colnas; frame[neworder] }
-
-header %>% filter(!is.na(`sex-value`)) %>% reselect()
-
-alkimerge_children = function(children) {
-  out = list()
-  children
-}
-
-
-
-macbeth = tree %>% to_frame
-
 library(tidytext)
-framed = d %>% to_frame %>% unnest_tokens(word, text)
+library(TEIdytext)
+fname = system.file("extdata", "frus1946v06.xml", package = "TEIdytext")
+#fname = system.file("extdata", "Tomorrow_and_tomorrow.xml", package="TEIdytext")
+#fname = system.file("extdata", "Mac.xml", package="TEIdytext")
 
-library(ggplot2)
-framed %>%
-  group_by(stage, word) %>%
-  summarize(count=n()) %>%
-  arrange(-count) %>%
-  ggplot() + geom_bar(aes(x=word, y = count, fill=stage), position="dodge", stat="identity") + coord_flip() +
-  facet_wrap(~stage)
+all = TEIdy(fname, ignore = c("c", "w"), discard = "teiHeader") 
+
+counts = all %>% 
+  filter(div.document.subtype=="historical-document") %>%
+  group_by(div.document.n) %>% 
+  lift_data(persName.from, plaintext, name_from) %>%
+  select(name_from, div.document.n, plaintext) %>%
+  unnest_tokens(word, plaintext) %>%
+  group_by(name_from, word, div.document.n) %>%
+  filter(name_from != "") %>%
+  summarize(count = n()) %>% arrange(-count) %>% 
+  ungroup %>%
+  group_by(div.document.n)
 
 
+
+
+j = data %>% group_by(name_from) %>% grouped_llr(word,count)
+j %>% arrange(-dunning) %>% 
 ```

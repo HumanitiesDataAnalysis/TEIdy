@@ -1,5 +1,3 @@
-library(purrr)
-
 #' Load an XML document as a data.frame
 #'
 #' @param fname A filename
@@ -54,15 +52,33 @@ combine_data = function(listset) {
 }
 
 
-lift_data = function(data, from = NULL, to = NULL) {
+#' Lift up
+#'
+#' @param data A tidy data frame.
+#' @param where The tag where a value is located; eg, 'author'.
+#' @param from The tag to extract a value from. This will usually be 'fulltext'.
+#' @param to The new field to put the value into.
+#'
+#' @return
+#'
+#' @import rlang
+#'
+#' @export
+#'
+lift_data = function(data, where, from = NULL, to = NULL) {
   # Lifts up data that is undefined for tag across the group.
   # Especially useful if the text is present.
-  from = enquo(from)
+  tag = enquo(where)
+  value = enquo(from)
+  if (quo_is_null(value)) {
+    cat("NULL")
+    value = tag
+  }
   newfield = enquo(to)
   if (quo_is_null(newfield)) {
-    newfield = from
+    newfield = value
   }
-  data %>% mutate(!!newfield := !!from %>% discard(is.na) %>% paste(collapse = "--"))
+  data %>% mutate(!!newfield := map2(!!tag, !!value,  ~ list(.x, .y)) %>% discard(~is.na(.[[1]])) %>% map(pluck,2) %>% compact %>% paste(collapse = "--"))
 }
 
 
@@ -111,7 +127,7 @@ traverseXML = function(node, ignore = c("basetext"), discard = c(), keep = c(), 
 
   if (xml2::xml_type(node) == "text") {
     if (mode=="summarize") {return(data_frame(tag="basetext", value="text", children=1, n = 1))}
-    return(env(plaintext = xml2::xml_text(node), .length = 1, .allocated = 1))
+    return(rlang::env(plaintext = xml2::xml_text(node), .length = 1, .allocated = 1))
   }
 
   name = xml2::xml_name(node)
@@ -120,7 +136,7 @@ traverseXML = function(node, ignore = c("basetext"), discard = c(), keep = c(), 
 
   children = childNodes(node, discard, ignore, keep, mode)
   if (length(children)==0) {
-    children = list(env("empty" = name, .length = 1, .allocated = 1))
+    children = list(rlang::env("empty" = name, .length = 1, .allocated = 1))
   }
 
   reduced = reduce(children, combiner)
@@ -160,3 +176,39 @@ traverseXML = function(node, ignore = c("basetext"), discard = c(), keep = c(), 
 }
 
 
+#' Summarize the log-likelihood ratio across a grouped data grame
+#'
+#' @param data A data frame
+#' @param token The column indicating a token.
+#' @param count The column indicating wordcount data.
+#' @param fill Whether to
+#'
+#' @return A dataframe with the supplied grouping and a log-likelihood for each token in that grouping.
+#' Strongly positive numbers are over-represented; strongly negative numbers are under-represented.
+#' @export
+#'
+summarize_llr = function(data, token, count, fill=FALSE) {
+  # By Ted Dunning.
+
+  token = enquo(token)
+  count = enquo(count)
+  groupings = groups(data)
+
+  data %>% group_by(!!token, add = TRUE) %>%
+    summarize(count=sum(!!count) %>% as.numeric) %>%
+    group_by(!!token) %>% mutate(grandtot = sum(count)) %>%
+    group_by(!!!groupings) %>%
+    # Dunning scores
+    mutate(count.x = count, count.y = grandtot - count) %>%
+    mutate(c = sum(count.x), d = sum(count.y), totalWords = c + d) %>%
+    mutate(count.y = ifelse(count.y==0, 1, count.y)) %>%
+    mutate(exp.x = c*grandtot/totalWords, exp.y = d * grandtot/totalWords) %>%
+    mutate(score = 2*(
+      (count*log(
+        count/exp.x)) +
+        count.y*log(count.y/exp.y))
+    ) %>%
+    mutate(score = ifelse((count.y - exp.y) > 0, -score, score)) %>%
+    select(!!!groupings, !!token, dunning_llr = score) %>%
+    ungroup
+}

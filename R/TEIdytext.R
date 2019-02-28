@@ -18,7 +18,6 @@
 #' @name TEIdytext
 #'
 #' @import dplyr
-#'
 #' @import purrr
 
 NULL
