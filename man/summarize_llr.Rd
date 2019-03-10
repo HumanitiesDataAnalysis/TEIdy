@@ -2,9 +2,9 @@
 % Please edit documentation in R/framer.R
 \name{summarize_llr}
 \alias{summarize_llr}
-\title{Summarize the log-likelihood ratio across a grouped data grame}
+\title{Summarize the log-likelihood ratio across a grouped data frame}
 \usage{
-summarize_llr(data, token, count, fill = FALSE)
+summarize_llr(data, token, count = rep(1, n()))
 }
 \arguments{
 \item{data}{A data frame}
@@ -12,13 +12,11 @@ summarize_llr(data, token, count, fill = FALSE)
 \item{token}{The column indicating a token.}
 
 \item{count}{The column indicating wordcount data.}
-
-\item{fill}{Whether to}
 }
 \value{
 A dataframe with the supplied grouping and a log-likelihood for each token in that grouping.
 Strongly positive numbers are over-represented; strongly negative numbers are under-represented.
 }
 \description{
-Summarize the log-likelihood ratio across a grouped data grame
+Summarize the log-likelihood ratio across a grouped data frame
 }

@@ -1,5 +1,5 @@
 ---
-title: "Shakespeare"
+title: "FRUS"
 author: "Ben Schmidt"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,6 +8,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+This vignette illustrates using the tags to explore a single volume in the *Foreign Relations of the United States.*
+
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -23,7 +26,8 @@ library(tidytext)
 library(TEIdytext)
 fname = system.file("extdata", "frus1946v06.xml", package = "TEIdytext")
 
-all = TEIdy(fname, ignore = c("c", "w"), discard = "teiHeader") 
+all = TEIdy(fname, ignore = c("c", "w")) 
+
 ```
 
 Get word counts by document author and document number.
@@ -39,9 +43,30 @@ counts = all %>%
   group_by(name_from, word, div.document.n) %>%
   filter(name_from != "") %>%
   summarize(count = n()) %>% arrange(-count) %>% 
-  ungroup %>%
-  group_by(div.document.n)
+  ungroup
+```
 
+```{r}
+top_senders = counts %>% 
+  group_by(name_from) %>%
+  summarize(count=sum(count)) %>%
+  arrange(-count) %>% head(10)
+
+top_senders %>%
+  ggplot() + geom_bar(aes(x=name_from, y = count), stat="identity") + coord_flip()
+```
+
+```{r}
+counts %>% 
+  group_by(name_from, div.document.n) %>% summarize(words = sum(count)) %>%
+  inner_join(top_senders) %>%
+  arrange(-words) %>%
+  head(40) %>%
+  ggplot() + geom_bar(aes(x=reorder(interaction(name_from, div.document.n), words), fill=name_from, y = words), stat='identity') + coord_flip() + 
+  labs(title="Whoa, that's one long telegram!")
+```
+
+```{r}
 j = counts %>%
   group_by(name_from) %>% 
   filter(sum(count) > 10000) %>% 

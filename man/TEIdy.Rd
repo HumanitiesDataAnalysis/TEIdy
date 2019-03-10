@@ -9,7 +9,8 @@ TEIdy(fname, ignore = c(), discard = c(), keep = c())
 \arguments{
 \item{fname}{A filename}
 
-\item{ignore}{Tags that, when encountered, will not be added as columns to the tidy representation.}
+\item{ignore}{Tags that, when encountered, will not be added as columns to the tidy representation. Data inside these tags
+will be kept, but the tag will not be column.}
 
 \item{discard}{Tags that, when encountered, will be discarded from the tidy representation. discard='teiHeader', for
 example, will prevent header information from being included.}

@@ -2,22 +2,42 @@
 % Please edit documentation in R/framer.R
 \name{lift_data}
 \alias{lift_data}
-\title{Lift up}
+\title{Lift up a piece of data}
 \usage{
 lift_data(data, where, from = NULL, to = NULL)
 }
 \arguments{
-\item{data}{A tidy data frame.}
+\item{data}{A tibble.}
 
 \item{where}{The tag where a value is located; eg, 'author'.}
 
-\item{from}{The tag to extract a value from. This will usually be 'fulltext'.}
+\item{from}{The tag to extract a value from. By default '.text'; i.e., the data is in the text field.}
 
-\item{to}{The new field to put the value into.}
+\item{to}{The new field to put the value into. By default, it overwrites}
 }
 \value{
-
+A copy of the original tibble with one altered or new column.
 }
 \description{
-Lift up
+Frequently a TEI document will have useful information about
+subheadings located inside another tag: for instance, consider this XML.
+The author is "HAMILTON", but authorship applies to the entire 'div.'
+
+This function allows you to lift out the contents of any field up to every
+element in the same document (where 'document' is defined by the current
+tibble grouping.) Now every element in the div will have 'Hamilton' as author.
+
+<div>
+<title>FEDERALIST No. 1</title>
+<p>General Introduction</p>
+<p>For the Independent Journal.</p>
+<author>HAMILTON</author>
+<text>
+<p>To the People of the State of New York:</p>
+[...]
+</text>
+</div>
+
+The 'from' and 'to' arguments give finer-grained control, but generally it
+can be OK to populate the text from one tag to the full document.
 }
