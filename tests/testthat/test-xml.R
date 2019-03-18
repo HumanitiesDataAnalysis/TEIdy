@@ -29,10 +29,11 @@ test_that("nested XML", {
 test_that("Federalist", {
   path = system.file("extdata", "federalist.papers.xml", package="TEIdytext")
   library(TEIdytext)
-  p = TEIdy(path)
+  TEIdy(path)
   p
 
-}
+})
+
 test_that("empty produce metadata", {
   xml2::read_xml("<pb id='foo'/>") %>% TEIdytext:::traverseXML() %>%
     TEIdytext:::bundle_env_to_frame() %>% nrow %>% expect_equal(1)
