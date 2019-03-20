@@ -36,10 +36,10 @@ Hi Hamlet, I'm your dad!
 Might be, ideally, rendered something like this:
 
 ```
-plaintext                 act       scene    speech   speaker
-Act 1                     1         NA       NA       NA
-Enter Hamley              1         1        NA       NA
-Hi Hamlet, I'm your dad!  1         1        TRUE     Ghost
+.txt                    .hierarchy                 act       scene    speech   speaker
+Act 1                   div.act                    1         NA       NA       NA
+Enter Hamlet            div.act>div.scene>stage    1         1        NA       NA
+Hi Hamlet, I'm your dad!div.act>div.scene>speech   1         1        TRUE     Ghost
 ```
 
 This lets you quickly use filter, group_by, and other tidyverse operations
